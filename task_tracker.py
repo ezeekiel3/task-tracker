@@ -1,21 +1,33 @@
 import argparse
 import json
+from dataclasses import dataclass
+
+@dataclass
+class Task:
+    id: int
+    description: str
+    status: str
+    createdAt: str
+    updatedAt: str
 
 def add_task(description):
-    with open('datos.json', 'r') as file:
-        if (file.read() == ""):
-            print("El archivo esta vacio... Creando un array con el elemento")
-            contenido_vacio = True
-        else:
-            print("El archivo no esta vacio, agregando elemento")
-            contenido_vacio = False
+    try:
+        with open('datos.json', 'r') as file:
+            data = json.load(file)
+    except:
+        print('El archivo esta vacio, inicializando...')
+        with open('datos.json', 'w') as file:
+            file.write("{}")
 
-    with open('datos.json' 'w') as file:
-        if contenido_vacio:
-            file.write("[]")
+    task: Task = {
+        "id": int,
+        "description": description,
+        "status": str
+    }
 
-parser = argparse.ArgumentParser(prog="task-cli")
-subparsers = parser.add_subparsers(dest="command")
+
+parser = argparse.ArgumentParser(prog='task-cli')
+subparsers = parser.add_subparsers(dest='command')
 
 add_parser = subparsers.add_parser('add')
-add_parser.add_argument("description", type=str)
+add_parser.add_argument('description', type=str)
