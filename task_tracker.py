@@ -29,6 +29,31 @@ def add_task(description):
     with open('datos.json', 'w') as file:
         json.dump(task_arr, file, indent=4)
 
+def update_task(item_id, new_description):
+    select_item_by_id = task_arr["tasks"][item_id]
+    
+    today = date.today()
+    select_item_by_id["description"] = new_description
+    select_item_by_id["updatedAt"] = str(today)
+
+    with open('datos.json', 'w') as file:
+        json.dump(task_arr, file, indent=4)
+
+def delete_task(task_id):
+    for i, task in enumerate(task_arr["tasks"]):
+        if (task["id"] == task_id):
+            del task_arr["tasks"][i]
+            
+            with open('datos.json', 'w') as file:
+                json.dump(task_arr, file, indent=4)
+            return
+    print("no se encontro la tarea con el id: ", task_id)
+
+# def task_in_progress(task_id):
+
+
+# def task_done(task_id):    
+
 parser = argparse.ArgumentParser(prog='task-cli')
 subparsers = parser.add_subparsers(dest='command')
 

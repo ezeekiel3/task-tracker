@@ -1,3 +1,9 @@
 {
-    "tasks": []
+    "tasks": [
+        {
+            "id": 1,
+            "description": "leer la biblia",
+            "createdAt": "2025-07-22"
+        }
+    ]
 }
