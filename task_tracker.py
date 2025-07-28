@@ -6,8 +6,8 @@ try:
     with open('datos.json', 'r') as file:
         task_arr = json.load(file)
 except:
-    print('El archivo esta vacio... inicializando')
-    with open('datos.json', 'w') as file:
+    print('El archivo esta vacio o no existe... inicializando')
+    with open('datos.json', 'x') as file:
         file.write('{''"tasks": []}')
 
 def add_task(description):
@@ -146,5 +146,3 @@ match args.command:
         task_done(args.id)
     case 'list':
         show_list(args.status)
-    case _:
-        parser.print_help()
