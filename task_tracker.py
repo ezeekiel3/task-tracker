@@ -30,6 +30,8 @@ def add_task(description):
     with open('datos.json', 'w') as file:
         json.dump(task_arr, file, indent=4)
 
+    print(f'Se agrego correctamente la tarea {task}')
+
 def update_task(item_id, new_description):
     select_item_by_id = task_arr["tasks"][item_id]
     
@@ -39,6 +41,8 @@ def update_task(item_id, new_description):
 
     with open('datos.json', 'w') as file:
         json.dump(task_arr, file, indent=4)
+    
+    print(f'se edito correctamente la tarea con id {select_item_by_id["id"]}, ahora es "{select_item_by_id["description"]}"')
 
 def delete_task(task_id):
     for i, task in enumerate(task_arr["tasks"]):
@@ -47,26 +51,40 @@ def delete_task(task_id):
             
             with open('datos.json', 'w') as file:
                 json.dump(task_arr, file, indent=4)
+            print(f'se elimino correctamente la tarea con id {task_id}')
             return
     print("no se encontro la tarea con el id: ", task_id)
+    return
 
 def task_in_progress(task_id):
+    select_item_by_id = False
     for i, task in enumerate(task_arr["tasks"]):
         if (task["id"] == task_id):
             select_item_by_id = task_arr["tasks"][i]
-    select_item_by_id["status"] = "in-progress"
-    
-    with open('datos.json', "w") as file:
-        json.dump(task_arr, file, indent=4)
+    if (select_item_by_id == False):
+        print(f'no se encontro el elemento con id "{task_id}"')
+        return
+    else:
+        select_item_by_id["status"] = "in-progress"
+        print(f'se marco en progreso correctamente el elemento con id "{task_id}"')
+        with open('datos.json', "w") as file:
+            json.dump(task_arr, file, indent=4)
+        return
 
 def task_done(task_id):
+    select_item_by_id = False
     for i, task in enumerate(task_arr["tasks"]):
         if (task["id"] == task_id):
             select_item_by_id = task_arr["tasks"][i]
-    
-    select_item_by_id["status"] = "done"
-    with open('datos.json', "w") as file:
-        json.dump(task_arr, file, indent=4)
+    if (select_item_by_id == False):
+        print(f'no se encontro la tarea con id "{task_id}"')
+        return
+    else: 
+        select_item_by_id["status"] = "done"
+        print(f'se marco como terminado la tarea con id "{task_id}"')
+        with open('datos.json', "w") as file:
+            json.dump(task_arr, file, indent=4)
+        return
 
 def show_list(status=""):
     if (status == "done"):
